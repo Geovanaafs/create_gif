@@ -6,3 +6,6 @@ How to create a GIF in Python using Imageio library.
 ```
 pip3 install imageio
 ```
+
+ Running the Program 'gif.py'
+ 
