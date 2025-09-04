@@ -1,18 +1,35 @@
-# Import the imageio.v3 library as iio for reading/writing images
-import imageio.v3 as iio  
+# Import required libraries
+# - imageio.v3 (aliased as iio) for reading and writing images
+# - os for working with file paths and directories
+import imageio.v3 as iio
+import os
 
-# List of image file names to be combined into a GIF
-filenames = ['cat1.png','cat2.png','cat3.png', 'cat4.png', 'cat5.png', 'cat6.png', 'cat7.png',
-             'cat6.png','cat5.png', 'cat4.png','cat3.png','cat2.png']
+# Define the folder where the images are stored
+image_folder = '/images'
 
-# Create an empty list to store the loaded images
+# Get a list of all files in the folder (useful for checking what’s inside)
+files = os.listdir(image_folder)
+print("Files in folder:", files)
+
+# Build the sequence of filenames for the GIF:
+# Forward: cat1.png → cat7.png
+# Backward: cat6.png → cat2.png
+filenames = [f"cat{i}.png" for i in list(range(1, 8)) + list(range(6, 1, -1))]
+print("GIF sequence:", filenames)
+
+# Prepare a list to hold the loaded images
 images = []
 
-# Loop through each file name, read the image, and add it to the images list
+# Loop through each filename, load the image, and add it to the list
+# Use os.path.join() to create the full path to each image
 for filename in filenames:
-    images.append(iio.imread(filename))
+    filepath = os.path.join(image_folder, filename)  # full path
+    images.append(iio.imread(filepath))
 
-# Write the images to a GIF file
-# duration = 500 sets the time (in milliseconds) each frame is displayed
-# loop = 0 makes the GIF loop forever
-iio.imwrite('cat.gif', images, duration=500, loop=0)
+# Save the images as an animated GIF
+# - duration=500 → each frame is displayed for 500 ms
+# - loop=0 → the GIF repeats forever
+iio.imwrite('cat.gif', images, format='GIF', duration=500, loop=0)
+
+print("GIF created successfully: cat.gif")
+
