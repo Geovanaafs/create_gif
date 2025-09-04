@@ -5,7 +5,7 @@ import imageio.v3 as iio
 import os
 
 # Define the folder where the images are stored
-image_folder = '/images'
+image_folder = './images'
 
 # Get a list of all files in the folder (useful for checking what’s inside)
 files = os.listdir(image_folder)
